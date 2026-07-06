@@ -18,27 +18,37 @@ def collect_cpu_metrics() -> dict[str, Any]:
     """
     Collect CPU telemetry from the host machine.
 
-    Returns:
+    Return
         dict[str, Any]:
             Dictionary containing CPU metrics.
     """
 
-    metrics: dict[str, Any] = {}
+    cpu_metrics: dict[str, Any] = {}
 
     # -----------------------------
     # Timestamp
     # -----------------------------
-    metrics["timestamp"] = datetime.now(UTC).isoformat()
+    cpu_metrics["timestamp"] = datetime.now(UTC).isoformat()
 
     # -----------------------------
     # CPU Usage
     # -----------------------------
-    metrics["usage_percent"] = psutil.cpu_percent(interval=1)
+    cpu_metrics["usage_percent"] = psutil.cpu_percent(interval=1)
 
     # -----------------------------
     # CPU Core Information
     # -----------------------------
-    metrics["physical_cores"] = psutil.cpu_count(logical=False)
-    metrics["logical_cores"] = psutil.cpu_count(logical=True)
+    cpu_metrics["physical_cores"] = psutil.cpu_count(logical=False)
+    cpu_metrics["logical_cores"] = psutil.cpu_count(logical=True)
+    
+    cpu_metrics={
+        usage_percent :
+        physical_cores:
+        logical_cores:
+    }
+    
+    frequency=psutil.cpu_freq()
+    
+    
 
     return metrics
