@@ -22,13 +22,15 @@ def collect_cpu_metrics() -> dict[str, Any]:
         dict[str, Any]:
             Dictionary containing CPU metrics.
     """
-
+    metrics: dict[str, Any]={}
     cpu_metrics: dict[str, Any] = {}
 
     # -----------------------------
     # Timestamp
     # -----------------------------
-    cpu_metrics["timestamp"] = datetime.now(UTC).isoformat()
+    timestamp = datetime.now(UTC).isoformat()
+    
+    metrics["timestamp"] =  timestamp
 
     # -----------------------------
     # CPU Usage
@@ -41,13 +43,23 @@ def collect_cpu_metrics() -> dict[str, Any]:
     cpu_metrics["physical_cores"] = psutil.cpu_count(logical=False)
     cpu_metrics["logical_cores"] = psutil.cpu_count(logical=True)
     
-    cpu_metrics={
-        usage_percent :
-        physical_cores:
-        logical_cores:
-    }
     
-    frequency=psutil.cpu_freq()
+    frequency = psutil.cpu_freq()
+    
+    if frequency is not None:
+        cpu_metrics["frequency"] = {
+            "current_mhz": frequency.current,
+            "minimum_mhz": frequency.min,
+            "maximum_mhz": frequency.max
+        }
+    else:
+        cpu_metrics["frequency"] = {
+            "current_mhz": None,
+            "minimum_mhz": None,
+            "maximum_mhz": None
+        }
+    
+    metrics["cpu"] = cpu_metrics
     
     
 
